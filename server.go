@@ -8,6 +8,7 @@ import (
 	"github.com/spf13/viper"
 	"log"
 	"net/http"
+	"strings"
 )
 
 type Record struct {
@@ -30,7 +31,7 @@ func main() {
 }
 
 func handleUpdate(w http.ResponseWriter, r *http.Request) {
-	remoteIp := r.Header.Get("X-Forwarded-For")
+	remoteIp := strings.Split(r.Header.Get("X-Forwarded-For"), ", ")[0]
 	name := way.Param(r.Context(), "name")
 	UpdateDNSRecordByName(remoteIp, name)
 }
