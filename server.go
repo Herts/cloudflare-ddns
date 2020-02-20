@@ -30,7 +30,7 @@ func main() {
 }
 
 func handleUpdate(w http.ResponseWriter, r *http.Request) {
-	remoteIp := r.RemoteAddr
+	remoteIp := r.Header.Get("X-Forwarded-For")
 	name := way.Param(r.Context(), "name")
 	UpdateDNSRecordByName(remoteIp, name)
 }
