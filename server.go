@@ -82,9 +82,11 @@ func UpdateDNSARecord(zoneId, recordId, name, content string) {
 		TTL:     120,
 		Proxied: false,
 	}
+	auth := fmt.Sprint("Bearer ", viper.GetString("apiToken"))
+
 	req := gorequest.New()
 	_, _, errs := req.Put(fmt.Sprintf("https://api.cloudflare.com/client/v4/zones/%s/dns_records/%s", zoneId, recordId)).
-		Set("Authorization", "Bearer ewxsaTpcAtxa8SExmK0xtdwDSLysoFWK4I727us4").
+		Set("Authorization", auth).
 		Type("json").
 		Send(data).
 		End()
